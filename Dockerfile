@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --no-cache-dir \
         paper-search-mcp==0.1.3 \
-        mcp-proxy==0.10.2
+        mcp-proxy==0.11.0
 
 WORKDIR /app
 COPY Caddyfile /app/Caddyfile
