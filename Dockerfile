@@ -17,9 +17,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir \
-        paper-search-mcp==0.1.3 \
-        mcp-proxy==0.11.0
+# paper-search-mcp PyPI v0.1.3 doesn't have GOOGLE_SCHOLAR_PROXY_URL support yet — install from GitHub main
+RUN apt-get update && apt-get install -y --no-install-recommends git \
+    && pip install --no-cache-dir \
+        "paper-search-mcp @ git+https://github.com/openags/paper-search-mcp.git@main" \
+        mcp-proxy==0.11.0 \
+    && apt-get purge -y git \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY Caddyfile.template /app/Caddyfile.template
