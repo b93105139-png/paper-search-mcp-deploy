@@ -1,0 +1,20 @@
+{
+	auto_https off
+	admin off
+}
+
+:8080 {
+	@healthz path /healthz
+	handle @healthz {
+		respond "OK" 200
+	}
+
+	@authorized header Authorization "Bearer {env.BEARER_TOKEN}"
+	handle @authorized {
+		reverse_proxy 127.0.0.1:8081
+	}
+
+	handle {
+		respond "Unauthorized" 401
+	}
+}
