@@ -42,11 +42,14 @@ try:
         try:
             return _orig_ET_fromstring(content)
         except _ET.ParseError:
+            # Fall back to lxml recover-mode parser. Return the lxml element directly
+            # rather than round-tripping back through ET — lxml's Element supports the
+            # findall/find/iter/text API that pubmed.py uses, and round-tripping can
+            # lose namespace/encoding info or strip elements unexpectedly.
             from lxml import etree as _lx
             parser = _lx.XMLParser(recover=True, encoding="utf-8")
             data = content.encode("utf-8") if isinstance(content, str) else content
-            root = _lx.fromstring(data, parser=parser)
-            return _orig_ET_fromstring(_lx.tostring(root))
+            return _lx.fromstring(data, parser=parser)
 
     _ET.fromstring = _et_fromstring_recover
 except Exception:
