@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends git \
     && pip install --no-cache-dir \
         "paper-search-mcp @ git+https://github.com/openags/paper-search-mcp.git@main" \
         mcp-proxy==0.11.0 \
+        lxml==5.3.0 \
     && apt-get purge -y git \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
