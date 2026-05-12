@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends git \
 WORKDIR /app
 COPY Caddyfile.template /app/Caddyfile.template
 COPY start.sh /app/start.sh
+COPY sitecustomize.py /usr/local/lib/python3.12/sitecustomize.py
 RUN chmod +x /app/start.sh
 
 EXPOSE 8080
