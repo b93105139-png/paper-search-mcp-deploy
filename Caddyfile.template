@@ -9,12 +9,13 @@
 		respond "OK" 200
 	}
 
-	@authorized header Authorization "Bearer {env.BEARER_TOKEN}"
+	@authorized path /__BEARER_TOKEN__/*
 	handle @authorized {
+		uri strip_prefix /__BEARER_TOKEN__
 		reverse_proxy 127.0.0.1:8081
 	}
 
 	handle {
-		respond "Unauthorized" 401
+		respond "Not Found" 404
 	}
 }

@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir \
         mcp-proxy==0.11.0
 
 WORKDIR /app
-COPY Caddyfile /app/Caddyfile
+COPY Caddyfile.template /app/Caddyfile.template
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
